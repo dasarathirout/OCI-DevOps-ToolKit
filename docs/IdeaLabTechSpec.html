@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OCIDevOpsToolkitTechnicalSpecification</title>
+  <style>
+    :root {
+      --bg: #f6f8fb;
+      --paper: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+      --accent: #0b57d0;
+      --accent-soft: #eaf1ff;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Roboto, Arial, sans-serif;
+      font-size: 14px;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.45;
+    }
+    .page {
+      max-width: 1100px;
+      margin: 22px auto;
+      background: var(--paper);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+      overflow: hidden;
+    }
+    header {
+      background: linear-gradient(120deg, #0b57d0, #174ea6);
+      color: #fff;
+      padding: 18px 24px;
+    }
+    header h1 {
+      margin: 0 0 8px;
+      font-size: 1.45rem;
+    }
+    header p {
+      margin: 0;
+      font-size: 0.9rem;
+      opacity: 0.92;
+    }
+    main { padding: 18px 24px 24px; }
+    h2 {
+      font-size: 1.02rem;
+      margin: 16px 0 8px;
+      color: #0f172a;
+      border-left: 3px solid var(--accent);
+      padding-left: 8px;
+    }
+    p { margin: 6px 0 8px; }
+    ul { margin: 6px 0 10px 18px; }
+    li { margin: 3px 0; }
+    .meta {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 6px 12px;
+      padding: 10px;
+      border: 1px solid var(--border);
+      background: #fcfdff;
+      border-radius: 8px;
+    }
+    .meta .k { color: var(--muted); font-weight: 600; }
+    .meta .v { font-weight: 600; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    th, td {
+      border-bottom: 1px solid var(--border);
+      padding: 7px 9px;
+      vertical-align: top;
+      text-align: left;
+      font-size: 0.88rem;
+    }
+    th {
+      background: var(--accent-soft);
+      color: #102a56;
+      font-weight: 700;
+    }
+    tr:last-child td { border-bottom: none; }
+    .diagram {
+      border: 1px dashed #b9c7e5;
+      background: #f8fbff;
+      border-radius: 8px;
+      padding: 10px;
+      color: #334155;
+      font-family: "SFMono-Regular", Menlo, Consolas, monospace;
+      font-size: 0.84rem;
+      white-space: pre-wrap;
+    }
+    .foot {
+      margin-top: 16px;
+      color: var(--muted);
+      font-size: 0.8rem;
+      border-top: 1px solid var(--border);
+      padding-top: 10px;
+    }
+
+    @media print {
+      @page {
+        size: A4 landscape;
+        margin: 10mm;
+      }
+
+      body {
+        background: #fff;
+        font-size: 11px;
+        line-height: 1.3;
+      }
+
+      .page {
+        max-width: none;
+        margin: 0;
+        border: none;
+        border-radius: 0;
+        box-shadow: none;
+      }
+
+      header,
+      .meta,
+      table,
+      .diagram,
+      ul,
+      p {
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      h2 {
+        break-after: avoid;
+        page-break-after: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <h1>OCI DevOps Toolkit IntelliJ Plugin — Technical Specification</h1>
+    </header>
+    <main>
+      <h2>Description:</h2>
+      <p>OCI DevOps Toolkit is an IntelliJ IDEA plugin that brings DevOps Portal
+        <a href="https://devops.oci.oraclecorp.com">https://devops.oci.oraclecorp.com</a> capabilities into the IDE.
+        <br/> It provides a unified tool window for SCM pull requests/review, build/pipeline/deployment visibility.
+        <br/>Objective: reduce context switching and speed up developer workflows.</p>
+
+      <h2>Use Case:</h2>
+      <p>For PR review, build/deployment tracking need to switch IDE & Browser.
+        <br/>Having information integrated with IDE can reduce friction.
+        <br/>The need is a single in-IDE DevOps experience to review PRs, monitor pipeline/deployment activity.
+        <br/> By leveraging <a href="https://docs.oracle.com/en-us/iaas/Content/devops/using/home.htm">DevOps API</a> and
+        <a href="https://docs.oracle.com/en-us/iaas/tools/oci-cli/latest/oci_cli_docs/index.html">OCI CLI</a>
+
+      <h2>Enhancement:</h2>
+      <ul>
+        <li>Fetching SCM pull request , search, sorting, filtering (user/status/branch).</li>
+        <li>Build and deployment tabs for selected OCI DevOps resource visibility.</li>
+        <li>Footer services for OCI CLI version, session expiry tracking, and auto-refresh/re-authentication signals.</li>
+        <li>Non-blocking background operations, robust error notifications, and safe UI-thread updates.</li>
+      </ul>
+
+      <h2>Scope:</h2>
+      <p><strong>In Scope:</strong></p>
+      <ul>
+        <li>IDE-native OCI DevOps visibility and interaction</li>
+        <li>PR operations dashboard behaviors</li>
+        <li>Build/deployment observability panels</li>
+        <li>Session and CLI health status in footer</li>
+        <li>Gatling HTTP performance reports</li>
+      </ul>
+
+      <h2>Functional Requirements</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Requirement</th>
+            <th>Acceptance Criteria</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>FR-01</td>
+            <td>PR listing + filter/search/sort</td>
+            <td>Accurate filtered list, refresh support, empty state shown</td>
+          </tr>
+          <tr>
+            <td>FR-02</td>
+            <td>Build/deployment visibility</td>
+            <td>Data rendered per tab; unavailable data handled gracefully</td>
+          </tr>
+          <tr>
+            <td>FR-03</td>
+            <td>OCI CLI/session health footer</td>
+            <td>Version/session status visible and periodically refreshed</td>
+          </tr>
+          <tr>
+            <td>FR-04</td>
+            <td>Async operations + notifications</td>
+            <td>No UI freeze; actionable error/success notifications</td>
+          </tr>
+        </tbody>
+      </table>
+<br/> <br/>
+<br/> <br/>
+<br/> <br/>
+      <h2>Design Flow</h2>
+      <div class="diagram">flowchart LR
+UI[Tool Window Tabs + Footer] --&gt; SVC[Service Layer]
+SVC --&gt; CLI[OCI CLI Executor]
+SVC --&gt; OCI[OCI DevOps APIs]
+SVC --&gt; EVT[Notification/Event Handler]</div>
+
+      <h2>Tech Stack</h2>
+      <ul>
+        <li>Java</li>
+        <li>IntelliJ Platform Plugin SDK</li>
+        <li>Gradle (Kotlin DSL)</li>
+        <li>OCI CLI + OCI DevOps APIs</li>
+        <li>JUnit test framework</li>
+        <li>Gatling Java DSL</li>
+        <li>Logback logging</li>
+      </ul>
+
+      <h2>Key NFRs</h2>
+      <ul>
+        <li><strong>Performance:</strong> non-blocking UI, responsive panel updates</li>
+        <li><strong>Reliability:</strong> timeout/retry and graceful fallback on OCI/API errors</li>
+        <li><strong>Observability:</strong> structured logs for commands and failures</li>
+        <li><strong>Security:</strong> no committed OCI tokens or environment-specific secrets</li>
+      </ul>
+
+      <h2>Delivery Criteria</h2>
+      <ul>
+        <li>Functional requirements mapped to tests</li>
+        <li>Plugin packaging and compatibility validated</li>
+        <li>Gatling reports generated for configured HTTP simulations</li>
+      </ul>
+
+      <div class="foot" style="text-align: center;"><code>#OraHacks2026</code></div>
+    </main>
+  </div>
+</body>
+</html>

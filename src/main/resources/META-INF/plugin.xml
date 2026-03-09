@@ -1,0 +1,47 @@
+<!-- Plugin Configuration File: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
+<idea-plugin>
+    <!-- Unique identifier of the plugin. It should be FQN, cannot be changed between the plugin versions. -->
+    <id>dasarathi.devops.toolkit-intellij-plugin</id>
+    <!-- Public plugin name should be written in Title Case.
+         Guidelines: https://plugins.jetbrains.com/docs/marketplace/best-practices-for-listing.html#plugin-name -->
+    <name>OCI DevOps ToolKit</name>
+    <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
+    <vendor email="dasarathi.rout@live.com" url="https://dasarathirout.github.io/">Dasarathi Rout</vendor>
+    <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
+         Guidelines: https://plugins.jetbrains.com/docs/marketplace/best-practices-for-listing.html#plugin-description -->
+    <description>
+        <![CDATA[
+            <h2>OCI DevOps ToolKit</h2>
+            <p>
+                IntelliJ Platform plugin for selected <b>Oracle Cloud Infrastructure (OCI) DevOps</b>
+                workflows inside the IDE.
+            </p>
+            <ul>
+                <li>Repository visibility for OCI DevOps resources inside a dedicated tool window.</li>
+                <li>Integrated OCI CLI awareness for local session.</li>
+                <li>Build and deployment visibility for selected OCI DevOps resources.</li>
+                <li>Gatling performance simulations for HTTP load checks and local reports.</li>
+            </ul>
+            <p><i>Designed to reduce context switching between IntelliJ, OCI DevOps Portal Console, and terminal workflows.</i></p>
+        ]]>
+    </description>
+    <!-- Product and plugin compatibility requirements.
+         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.vcs</depends>
+    <depends>Git4Idea</depends>
+    <resource-bundle>messages.DevOpsToolKit</resource-bundle>
+    <!-- Extensions defined by the plugin.
+         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
+    <extensions defaultExtensionNs="com.intellij">
+        <toolWindow id="OCIDevOpsToolKitToolWindow"
+                    secondary="false"
+                    anchor="right"
+                    factoryClass="dasarathi.devops.toolkit.DevOpsToolKitToolWindowFactory"
+                    icon="dasarathi.devops.toolkit.gui.icons.DevOpsToolKitIcons.DEVOPS_TOOL_WINDOW"/>
+        <notificationGroup id="DevopsToolKitEventNotification"
+                           displayType="BALLOON"
+                           key="dasarathi.notification.group.name"/>
+        <postStartupActivity implementation="dasarathi.devops.toolkit.core.DevOpsToolKitGuardActivity"/>
+    </extensions>
+</idea-plugin>

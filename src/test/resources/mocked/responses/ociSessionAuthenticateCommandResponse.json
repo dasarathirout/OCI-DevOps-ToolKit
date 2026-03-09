@@ -1,0 +1,14 @@
+{
+  "success": true,
+  "exitCode": 0,
+  "output": [
+    "Please switch to newly opened browser window to log in!",
+    "You can also open the following URL in a web browser window to continue:",
+    "https://login.us-phoenix-1.oraclecloud.com/v1/oauth2/authorize?action=login&client_id=iaas_console&response_type=token id_token_mocked_data&nonce=nonce_mock_data&scope=openid_mock_data&public_key=public_key_mock_data&redirect_uri=http://localhost:8181/mock_url&tenant=bmc_operator_access",
+    "Completed browser authentication process!",
+    "Config written to: /Users/dasarathi/.oci/config",
+    "Try out your newly created session credentials with the following example command:",
+    "oci iam region list --config-file /Users/dasarathi/.oci/config --profile OCI_DEVOPS_SCM --auth security_token"
+  ],
+  "errors": []
+}
